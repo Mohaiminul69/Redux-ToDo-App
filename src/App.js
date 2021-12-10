@@ -2,13 +2,14 @@ import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "react-bootstrap";
 import { increment, decrement } from "./Actions";
+import TodoSection from "./Components/TodoSection/TodoSection";
 
 function App() {
   const counter = useSelector((state) => state.counter);
   const dispatch = useDispatch();
   return (
     <div className="App">
-      <h1>Counter {counter}</h1>
+      <h1>Counters {counter}</h1>
       <Button onClick={() => dispatch(increment())} variant="dark">
         + Increment
       </Button>
@@ -19,6 +20,9 @@ function App() {
       >
         - Decrement
       </Button>
+
+      <TodoSection></TodoSection>
+
     </div>
   );
 }
