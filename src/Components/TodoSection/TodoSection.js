@@ -1,75 +1,75 @@
-import React from 'react';
-import { Col, Container, ListGroup, Row } from 'react-bootstrap';
-import './TodoSection.css';
+import React, { useState } from "react";
+import { Button, Col, Container, Form, ListGroup, Row } from "react-bootstrap";
+import Task from "./Task/Task";
+import "./TodoSection.css";
 
 const TodoSection = () => {
-    return (
-        <div className="todo-section">
-            <Container>
-                <div className="todo-wrap">
-                    <div className="todo-board">
-                        <Row>
-                            <Col md={12}>
-                                <h3 className="text-white my-3">My Todos</h3>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={12}>
-                                <div className="todo-action">
-                                    <div className="todo-input d-flex">
-                                        <div className="mb-2">
-                                            <label htmlFor="task">Task</label>
-                                            <input type="text" id="task" name="task" className="form-control" />
-                                        </div>
-                                        <div className="mb-2 ms-2">
-                                            <label htmlFor="details">Details</label>
-                                            <textarea type="text" className="form-control" name="details" id="details" rows="1" />
-                                        </div>
-                                    </div>
-                                    <div className="todo-submit">
-                                        <button className="todo-submit-btn">Add</button>
-                                    </div>
-                                </div>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <div className="todo-list mt-4">
-                                    <ListGroup>
-                                        <ListGroup.Item>
-                                            <div className="todo-body">
-                                                <div className="list-title">
-                                                    <h4>Task 1</h4>
-                                                    <p>This is task one</p>
-                                                </div>
-                                                <div className="list-badge">
-                                                    <h5>Button/state</h5>
-                                                </div>
-                                            </div>
-                                        </ListGroup.Item>
-                                        <ListGroup.Item>
-                                            <div className="todo-body">
-                                                <div className="list-title">
-                                                    <h4>Task 2</h4>
-                                                    <p>This is task two</p>
-                                                </div>
-                                                <div className="list-badge">
-                                                    <h5>Button/state</h5>
-                                                </div>
-                                            </div>
-                                        </ListGroup.Item>
+  const [name, setName] = useState("");
+  const [details, setDetails] = useState("");
+  const [tasks, setTasks] = useState([]);
+  const handleTaskName = (e) => {
+    setName(e.target.value);
+  };
+  const handleDetails = (e) => {
+    setDetails(e.target.value);
+  };
+  const handleAddTask = () => {
+    setTasks([...tasks, { name, details }]);
+  };
+  return (
+    <div className="todo-section">
+      <Container>
+        <div className="todo-wrap">
+          <div className="todo-board">
+            <Row>
+              <Col md={12}>
+                <h3 className="text-white my-3">My Todos</h3>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={12}>
+                <Form>
+                  <Row className="mb-3 text-white">
+                    <Form.Group as={Col} controlId="formGridEmail">
+                      <Form.Label>Task</Form.Label>
+                      <Form.Control
+                        onChange={handleTaskName}
+                        type="text"
+                        placeholder="Task Name"
+                      />
+                    </Form.Group>
 
-                                    </ListGroup>
-                                </div>
-                            </Col>
-                        </Row>
-                    </div>
-
+                    <Form.Group as={Col} controlId="formGridPassword">
+                      <Form.Label>Details</Form.Label>
+                      <Form.Control
+                        onChange={handleDetails}
+                        type="text"
+                        placeholder="Task Details"
+                      />
+                    </Form.Group>
+                  </Row>
+                  <Button onClick={handleAddTask} className="todo-submit-btn">
+                    Add
+                  </Button>
+                </Form>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <div className="todo-list mt-4">
+                  <ListGroup>
+                    {tasks.map((task, index) => (
+                      <Task key={index} task={task} />
+                    ))}
+                  </ListGroup>
                 </div>
-            </Container>
-
+              </Col>
+            </Row>
+          </div>
         </div>
-    );
+      </Container>
+    </div>
+  );
 };
 
 export default TodoSection;
